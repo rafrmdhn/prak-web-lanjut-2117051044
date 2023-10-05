@@ -3,24 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="<?=base_url("assets/css/style.css")?>">
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>User</title>
 </head>
 <body>
 <div class="w-full max-w-xs">
+    <?php $nama_kelas = session()->getFlashdata('nama_kelas'); ?>
     <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" action="<?= base_url('/user/store') ?>" method="post">
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="nama">
                 Nama
             </label>
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="nama" name="nama" type="text" placeholder="Nama">
+            <input class="<?= (empty(validation_show_error('nama'))) ? '':'is-invalid' ?> shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="nama" name="nama" type="text" placeholder="Nama"> 
+                <p class="text-red-500 text-xs italic"><?= validation_show_error('nama') ?></p>
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="kelas">
                 Kelas
             </label>
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="kelas" name="kelas" type="text" placeholder="Kelas">
+            <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="kelas" name="kelas">
+                <?php foreach ($kelas as $item) { ?>
+                    <option value="<?= $item['id'] ?>">
+                        <?= $item['nama_kelas'] ?>
+                    </option>
+                <?php } ?>
+            </select>
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="npm">
